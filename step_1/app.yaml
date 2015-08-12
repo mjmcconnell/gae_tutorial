@@ -1,0 +1,19 @@
+# Vist https://cloud.google.com/appengine/docs/python/config/appconfig
+# for more information on the app.yaml file
+
+# The Project ID of the application we created at
+# https://console.developers.google.com/project
+application: mjm-gae-tutorial
+version: step-one
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+
+- url: /page_two
+  static_files: page_two.html
+  upload: page_two.html
