@@ -1,0 +1,41 @@
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+<h1>
+{% if user %}
+    Welcome
+
+
+{% endif %}
+</h1>
+
+
+{% if user %}
+    <h1>{{ user.nickname() }}</h1>
+    <h3>Sign the guess book below</h3>
+    <a href="{{ logout_url }}">logout</a>
+
+    <form method="POST">
+        <label>Enter your name:</label>
+        <input type="text" name="name">
+        <button type="submit">Submit</button>
+    </form>
+
+{% else %}
+
+    <h1>Welcome</h1>
+    <p>To sign the guess book below, please first <a href="{{ login_url }}">login</a></p>
+
+{% endif %}
+
+<table>
+
+    {% for user in users %}
+
+        <tr>
+            <th>User</th>
+            <td>{{ user.name }}</td>
+        </tr>
+
+    {% endfor %}
+
+<table>
