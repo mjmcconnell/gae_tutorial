@@ -32,22 +32,11 @@ class LandingPage(webapp2.RequestHandler):
     """
 
     def get(self):
-        """Passes the request data to the render method
-        """
-        self.render(self.request.GET)
-
-    def post(self):
-        """Passes the request data to the render method
-        """
-        self.render(self.request.POST)
-
-    def render(self, request_data):
-        """Handles setting the template values and rendering of the template.
-        """
         # Define the variables we want to be available in the template
         template_values = {
-            'time': date.today(),
-            'request_data': request_data,
+            'date': date.today(),
+            'get_data': self.request.GET,
+            'post_data': self.request.POST,
         }
 
         # Grab the contents of the template
@@ -55,6 +44,11 @@ class LandingPage(webapp2.RequestHandler):
 
         # Write out the html from the template with the variables populated
         self.response.write(template.render(template_values))
+
+    def post(self):
+        """Lets the get method handle everything
+        """
+        self.get()
 
 
 class PageTwo(webapp2.RequestHandler):

@@ -19,8 +19,9 @@ libraries:
 - name: webapp2
   version: latest
 
+
 handlers:
 - url: /static
   static_dir: static
 - url: /.*
-  script: main.app
+  script: app.wsgi.app

@@ -1,13 +1,16 @@
 """Template handlers, for injecting python into html templates.
 """
+
+# stdlib imports
+from datetime import date
+
 # third party imports
 import jinja2
 import webapp2
-from google.appengine.api import users
 
 # local imports
 from app import config
-from app.models.users import User
+from app.models.messages import Message
 
 
 class TemplateHandler(webapp2.RequestHandler):
@@ -29,14 +32,14 @@ class TemplateHandler(webapp2.RequestHandler):
     def render(self, template_file):
         """Handles setting the template values and rendering of the template.
         """
-
+        # Grab template
         template = self._get_jinja_template(template_file)
-
+        # Sent jinja variables
         template_values = {
-            'login_url': users.create_login_url('/'),
-            'logout_url': users.create_logout_url,
-            'user': users.get_current_user(),
-            'users': User.query().fetch()
+            'date': date.today(),
+            'get_data': self.request.GET,
+            'post_data': self.request.POST,
+            'messages': Message.query().fetch(),
         }
-
+        # Write reponse to the browser
         self.response.write(template.render(template_values))

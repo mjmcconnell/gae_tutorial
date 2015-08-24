@@ -58,12 +58,12 @@ Passing data around your app
 
 Step 5
 -------
-Routes
+NDB Datastore
 
-Introduction to the wepapp2 Route object
+Persistent data storage using the GAE NDB Datastore
 
 Step 6
 -------
-Refactor out
+A cleaner app
 
 Inheritance and importing

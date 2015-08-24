@@ -8,6 +8,7 @@ from datetime import date
 # third party imports
 import jinja2
 import webapp2
+from google.appengine.ext import ndb
 
 
 # Set up the jinja configuration
@@ -27,6 +28,13 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 )
 
 
+class Message(ndb.Model):
+    """Datastore table, to store a visitors message
+    """
+
+    content = ndb.TextProperty()
+
+
 class LandingPage(webapp2.RequestHandler):
     """Handles requests for the landing page
     """
@@ -35,6 +43,9 @@ class LandingPage(webapp2.RequestHandler):
         # Define the variables we want to be available in the template
         template_values = {
             'date': date.today(),
+            'get_data': self.request.GET,
+            'post_data': self.request.POST,
+            'messages': Message.query().fetch(),
         }
 
         # Grab the contents of the template
@@ -42,6 +53,16 @@ class LandingPage(webapp2.RequestHandler):
 
         # Write out the html from the template with the variables populated
         self.response.write(template.render(template_values))
+
+    def post(self):
+        """Passes the request data to the render method
+        """
+        # Get the massage content from the post data
+        content = self.request.POST.get('content')
+        # Store the message content in the datastore for persistent storage
+        Message(content=content).put()
+        # Use the get method to render the landing page template as normal
+        self.get()
 
 
 class PageTwo(webapp2.RequestHandler):

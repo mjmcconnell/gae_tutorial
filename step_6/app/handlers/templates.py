@@ -1,9 +1,7 @@
 """Template handlers, for injecting python into html templates.
 """
-from google.appengine.api import users
-
 # local imports
-from app.models.users import User
+from app.models.messages import Message
 from app.handlers.base import TemplateHandler
 
 
@@ -15,14 +13,10 @@ class LandingPage(TemplateHandler):
     def post(self):
         """Passes the request data to the render method
         """
-        user = users.get_current_user()
-        msg = self.request.POST.get('msg')
-        db_record = User.query(User.email == user.email()).get()
-        if db_record is None:
-            db_record = User(email=user.email).put().get()
-
-        db_record.msg = msg
-        db_record.put()
+        # Get the massage content from the post data
+        content = self.request.POST.get('content')
+        # Store the message content in the datastore for persistent storage
+        Message(content=content).put()
 
         self.get()
 

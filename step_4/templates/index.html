@@ -1,12 +1,10 @@
-<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-
-<h1>Hello {{ request_data.name|default('World') }}</h1>
+<h1>Hello World</h1>
 
 <p>I've been called from the python handler at main.py</p>
 
 <p>That means I can tell you todays date</p>
 
-<p>{{ time }}</p>
+<p>{{ date }}</p>
 
 <p><a href="/page_two">click me</a> to go to page two</p>
 
@@ -14,7 +12,14 @@
 Try using the GET method in the form to see the difference
 -->
 <form method="POST">
-    <label>Enter your name:</label>
-    <input type="text" name="name">
+    <label>Leave a message:</label>
+    <input type="text" name="content">
     <button type="submit">Submit</button>
 </form>
+
+<h2>Request Data</h2>
+
+<ul>
+    <li>GET: {{ get_data.content }}</li>
+    <li>POST: {{ post_data.content }}</li>
+</ul>
