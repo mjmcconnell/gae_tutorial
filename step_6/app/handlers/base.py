@@ -41,5 +41,5 @@ class TemplateHandler(webapp2.RequestHandler):
             'post_data': self.request.POST,
             'messages': Message.query().fetch(),
         }
-        # Write reponse to the browser
+        # Write response to the browser
         self.response.write(template.render(template_values))
